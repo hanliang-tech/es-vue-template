@@ -10,19 +10,27 @@ const callNative = msg => {
 
 /*
  * 定位焦点
- * ref：this.$refs.tab 需要定位焦点标签的ref值
+ * $refs：this.$refs.view 需要定位焦点标签的$refs对象
  * */
-const requestFocus = ref => {
-  Vue.Native.callUIFunction(ref, 'requestFocus');
+const requestFocus = $refs => {
+  Vue.Native.callUIFunction($refs, 'requestFocus');
+}
+
+/*
+ * 清空上一次记忆焦点
+ * $refs：this.$refs.view ul的$refs对象
+ * */
+const clearFocusMemory = $refs => {
+  Vue.Native.callUIFunction($refs, 'clearFocusMemory');
 }
 
 /*
  * 预设焦点：适用于ul列表
- * ref：this.$refs.tab ul的ref值
+ * $refs：this.$refs.view ul的$refs对象
  * index：第几个子标签
  * */
-const setSelectChildPosition = (ref, index) => {
-  Vue.Native.callUIFunction(ref, 'setSelectChildPosition', [index]);
+const setSelectChildPosition = ($refs, index) => {
+  Vue.Native.callUIFunction($refs, 'setSelectChildPosition', [index]);
 }
 
 /*
@@ -36,9 +44,11 @@ const getDeviceInfo = () => {
 /*
  * 系统TOAST提示（各品牌电视的提示样式不同，介意的可自己做）
  * msg：提示文字
+ * long: 显示时间长短，true为7秒，false为4秒，默认false
  * */
-const TOAST = msg => {
-  Vue.Native.callNative('MiniModule', 'execute', {action: '__AC_TOAST__', text: msg });
+const TOAST = (msg, long) => {
+  long = long || false
+  Vue.Native.callNative('MiniModule', 'execute', { action: '__AC_TOAST__', text: msg, long });
 }
 
 /*
@@ -70,21 +80,14 @@ const newTabMax = (url, query, num, background) => {
  * 关闭当前页面
  * */
 const closePage = () => {
-  Vue.Native.callNative('DeviceEventModule', 'invokeDefaultBackPressHandler');
-}
-
-/*
- * 关闭所有页面
- * */
-const closeAllPage = () => {
   Vue.Native.callNative('MiniModule', 'execute', {action: '__AC_FINISH__'});
 }
 
 /*
  * 调起支付：用于单应用集成第三方支付sdk
  * */
-const pay = msg => {
-  return Vue.Native.callNativeWithPromise('MiniModule', 'pay', msg);
+const pay = data => {
+  return Vue.Native.callNativeWithPromise('MiniModule', 'pay', data);
 }
 
 /*
@@ -111,13 +114,13 @@ export default {
   callNativeWithPromise,
   callNative,
   requestFocus,
+  clearFocusMemory,
   setSelectChildPosition,
   getDeviceInfo,
   TOAST,
   newTab,
   newTabMax,
   closePage,
-  closeAllPage,
   pay,
   eventTack,
   sendToMobile,

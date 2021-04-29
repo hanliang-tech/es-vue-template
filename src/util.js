@@ -1,13 +1,5 @@
 let cachedApp;
 
-function setApp(app) {
-  cachedApp = app;
-}
-
-function getApp() {
-  return cachedApp;
-}
-
 // 监听按键key值
 const keyDown = {
   up: 19,
@@ -18,9 +10,25 @@ const keyDown = {
   menu: 82,
 }
 
+function setApp(app) {
+  cachedApp = app;
+}
+
+function getApp() {
+  return cachedApp;
+}
+
+/**
+ * Better function checking
+ */
+function isFunction(func) {
+  return Object.prototype.toString.call(func) === '[object Function]';
+}
+
 
 export {
   setApp,
   getApp,
-  keyDown
+  keyDown,
+  isFunction,
 };

@@ -43,7 +43,7 @@ export default {
       }
     },
     quit() {
-      native.closeAllPage();
+      native.closePage();
     },
     nativeOnKeyDown(key) {
       if (key === keyDown.down) {
