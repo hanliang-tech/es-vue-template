@@ -10,6 +10,7 @@ import TransitionImageView from './components/register/TransitionImageView';
 import QrView from './components/register/QrView'
 import VideoView from './components/register/video'
 import DanMuView from './components/register/DanMu'
+import AudioView from "./components/register/AudioView";
 import App from './app.vue';
 import routes from './routes';
 import { setApp } from './util';
@@ -31,6 +32,7 @@ Vue.use(TransitionImageView);
 Vue.use(QrView);
 Vue.use(VideoView);
 Vue.use(DanMuView);
+Vue.use(AudioView);
 
 const router = new VueRouter(routes);
 
