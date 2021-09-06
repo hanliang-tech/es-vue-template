@@ -39,7 +39,7 @@ export default {
         native.closePage();
       } else {
         this.exitTime = now
-        native.TOAST('双击返回键退出拓展屏');
+        native.TOAST('双击返回键退出APP');
       }
     },
     quit() {

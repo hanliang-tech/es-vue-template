@@ -123,6 +123,115 @@ const sendToMobile = (action, data) => {
   Vue.Native.callNative('MiniModule', 'execute', params);
 }
 
+/**
+ * 获取当前音量
+ * getVolume().then(res => {})
+ * */
+const getVolume = () => {
+  return Vue.Native.callNativeWithPromise('UtilsModule', 'getVolume');
+}
+
+/**
+ * 获取最大音量
+ * getMaxVolume().then(res => {})
+ * */
+const getMaxVolume = () => {
+  return Vue.Native.callNativeWithPromise('UtilsModule', 'getMaxVolume');
+}
+
+/**
+ * 设置音量
+ * 1      提高一点音量
+ * -1     减小一点音量
+ * 0      只显示一下音量的状态
+ * -100   静音
+ * 100    取消静音
+ * 101    切换静音/非静音状态
+ * volume: 音量值
+ * shouUI：是否显示音量UI(默认true)
+ * */
+const adjustVolume = (volume, shouUI) => {
+  Vue.Native.callNative('UtilsModule', 'adjustVolume', volume, shouUI);
+}
+
+/**
+ * 设置音量
+ * volume: 音量值
+ * shouUI：是否显示音量UI(默认false)
+ * */
+const setVolume = (volume, shouUI) => {
+  shouUI = shouUI || false
+  Vue.Native.callNative('UtilsModule', 'setVolume', volume, shouUI);
+}
+
+
+/**
+ * 智能音箱--是否支持智能音箱
+ * isSupportSpeaker().then(res => { console.log(res.support) })
+ * */
+const isSupportSpeaker = () => {
+  return Vue.Native.callNativeWithPromise('SpeakerModule', 'isSupportSpeaker')
+}
+
+/**
+ * 智能音箱--发现音箱开关设置
+ * data: 是否开启
+ * */
+const enableDiscoverSpeaker = (data) => {
+  Vue.Native.callNative('SpeakerModule', 'enableDiscoverSpeaker', data);
+}
+
+/**
+ * 智能音箱--获取绑定音箱列表
+ * getBindSpeakers().then(res => {})
+ * */
+const getBindSpeakers = () => {
+  return Vue.Native.callNativeWithPromise('SpeakerModule', 'getBindSpeakers', {})
+}
+
+/**
+ * 智能音箱--获取绑定码
+ * getBindCode().then(res => {})
+ * */
+const getBindCode = () => {
+  return Vue.Native.callNativeWithPromise('SpeakerModule', 'getBindCode', {})
+}
+
+/**
+ * 智能音箱--发现音箱
+ * discoverSpeakers().then(res => {})
+ * */
+const discoverSpeakers = () => {
+  return Vue.Native.callNativeWithPromise('SpeakerModule', 'discoverSpeakers', {})
+}
+
+/**
+ * 智能音箱--获取发现音箱开关状态
+ * canDiscoverSpeaker().then(res => {})
+ * */
+const canDiscoverSpeaker = () => {
+  return Vue.Native.callNativeWithPromise('SpeakerModule', 'canDiscoverSpeaker')
+}
+
+/**
+ * 通过sdk与app通信
+ * eventName: 事件名称（与app端约定）
+ * eventParams: 事件参数（与app端约定）
+ * nativeEventWithPromise(name, data).then(res => {})
+ * */
+const nativeEventWithPromise = (eventName, eventParams) => {
+  return Vue.Native.callNativeWithPromise('NativeEventModule', 'executeWithPromise', { eventId: eventName, data: eventParams });
+}
+
+/**
+ * 通过sdk与app通信
+ * eventName: 事件名称（与app端约定）
+ * eventParams: 事件参数（与app端约定）
+ * */
+const nativeEvent = (eventName, eventParams) => {
+  return Vue.Native.callNative('NativeEventModule', 'execute', { eventId: eventName, data: eventParams });
+}
+
 export default {
   callNativeWithPromise,
   callNative,
@@ -138,4 +247,16 @@ export default {
   pay,
   eventTack,
   sendToMobile,
+  getVolume,
+  getMaxVolume,
+  adjustVolume,
+  setVolume,
+  isSupportSpeaker,
+  enableDiscoverSpeaker,
+  getBindSpeakers,
+  getBindCode,
+  discoverSpeakers,
+  canDiscoverSpeaker,
+  nativeEventWithPromise,
+  nativeEvent,
 };

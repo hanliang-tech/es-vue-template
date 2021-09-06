@@ -41,6 +41,16 @@ function registerVideo() {
   Vue.registerElement('VideoView', {
     component: {
       name: 'VideoView',
+      processEventData(event, nativeEventName, nativeEventParams) {
+        switch (nativeEventName) {
+          case 'onProgressChange':
+            event.position = nativeEventParams.position;
+            break;
+          default:
+            break;
+        }
+        return event;
+      },
     },
   });
   Vue.component('video-view', {
