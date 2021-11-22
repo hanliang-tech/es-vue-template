@@ -1,21 +1,21 @@
 import Vue from 'vue';
 
 function registerScrollView() {
-  Vue.registerElement('ScrollView', {
+  Vue.registerElement('tkdScrollView', {
     component: {
-      name: 'ScrollView',
+      name: 'tkdScrollView',
     },
   });
   Vue.component('scroll-view',{
     methods: {
       scrollTo(x, y, animation) {
-        Vue.Native.callUIFunction(this.$refs.ScrollView, 'scrollTo', [x, y, animation]);
+        Vue.Native.callUIFunction(this.$refs.tkdScrollView, 'scrollTo', [x, y, animation]);
       },
     },
     render(h) {
-      return h('ScrollView',
+      return h('tkdScrollView',
         {
-          ref: 'ScrollView',
+          ref: 'tkdScrollView',
         }, this.$slots.default
       );
     },
