@@ -46,6 +46,11 @@ function registerVideo() {
           case 'onProgressChange':
             event.position = nativeEventParams.position;
             break;
+          case 'onVideoBeforeRelease':
+            console.log('registerVideo',JSON.stringify(nativeEventParams))
+            event.current = nativeEventParams.current;
+            event.total = nativeEventParams.total;
+            break;
           default:
             break;
         }
@@ -163,6 +168,9 @@ function registerVideo() {
       onVideoError(evt) {
         this.$emit('video-error', evt);
       },
+      onVideoBeforeRelease(evt) {
+        this.$emit('video-before-release', evt);
+      },
     },
     render(h) {
       const on = getEventRedirector.call(this, [
@@ -174,6 +182,7 @@ function registerVideo() {
         ['video-pause', 'videoPause'],
         ['progress-change', 'progressChange'],
         ['video-error', 'videoError'],
+        ['video-before-release', 'videoBeforeRelease'],
       ]);
       return h('VideoView',
         {
